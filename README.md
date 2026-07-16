@@ -1,6 +1,6 @@
-# prestacontrol
+# PrestaControl
 
-A new Flutter project.
+Aplicación Flutter (Android) para gestión de microcréditos y cobranza.
 
 ## Getting Started
 
