@@ -22,6 +22,15 @@ class PagoRepository {
   /// imputa [monto] en orden mora -> interés -> capital y guarda el pago
   /// con ese desglose ya calculado. Si el pago salda toda la deuda, marca
   /// el préstamo como pagado.
+  ///
+  /// IMPORTANTE: este método escribe en la tabla `Pagos`, que
+  /// `dashboardMetricsProvider` NO observa directamente (solo observa
+  /// `Prestamos` vía `watchPrestamosActivos()`). Si el pago es parcial y
+  /// no salda el préstamo, el stream del dashboard NO se refresca solo.
+  /// Las pantallas que llamen a [registrarPago] DEBEN hacer
+  /// `ref.invalidate(dashboardMetricsProvider)` inmediatamente después de
+  /// una llamada exitosa para que las métricas del dashboard queden al
+  /// día.
   Future<void> registrarPago({
     required String prestamoId,
     required double monto,

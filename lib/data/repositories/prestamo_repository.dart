@@ -26,6 +26,11 @@ class PrestamoRepository {
   /// Crea un préstamo nuevo calculando su [valorTotalAPagar] y
   /// [fechaPagoEsperada] a partir de [loan_calculator.dart], y retorna el
   /// id generado.
+  ///
+  /// Nota: NO hace falta invalidar `dashboardMetricsProvider` a mano tras
+  /// llamar a este método. Este insert escribe en la tabla `Prestamos`,
+  /// que es justo la que observa `watchPrestamosActivos()`, así que Drift
+  /// dispara el stream del dashboard automáticamente.
   Future<String> crearPrestamo({
     required String clienteId,
     required double capital,
